@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简易博客</title>
+    {% load staticfiles %}
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <script src="{% static 'app/scripts/jquery-1.10.2.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</head>
+<body style="background:#ba3b3b">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1 style="color:white">{{curr_article.title}}</h1>
+                <span style="color:white">{{curr_article.date}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container page-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default" style="margin-bottom:3px;">
+                <div class="panel-heading">
+                    <a href="/blog/index">首页</a> /
+                    <a href="javascript:;">博文详情</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" role="main" >
+            <div class="body-main">
+                <div class="panel panel-default" style="margin-bottom:5px">
+                    <div class="panel-body">
+                        <div class="jumbotron"
+                             style=" padding-left:15px;padding-right:15px;padding-top: 15px;padding-bottom: 15px; margin-bottom: 15px;color: inherit;background-color: #eee;">
+                            {% for section in section_list%}
+                            <h4>{{section}}</h4>
+                            {% endfor %}
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">评论：</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% for dis in disscuss%}
+                                    <h5>{{dis}}</h5>
+                                    <hr/>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div  class="row ">
+                        <div class="col-lg-6">
+                            <form action="/blog/detail/add_dis/{{id}}" method="post">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit" id="add" ><span class="glyphicon glyphicon glyphicon-pencil"   aria-hidden="true">发表评论</span></button>
+                                  </span>
+                                  <input type="text" class="form-control" name="content" placeholder="内容……">
+                                </div><!-- /input-group -->
+                            </form>
+                        </div><!-- /.col-lg-6 -->
+                    </div>
+                        <nav aria-label="...">
+                            <ul class="pager">
+                                <li><a href="/blog/detail/{{previous_article.article_id}}">上一篇：{{previous_article.title}}</a>
+                                </li>
+                                <li><a href="/blog/detail/{{next_article.article_id}}">下一篇：{{next_article.title}}</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom:20px">
+        <div class="container">
+            <h5 class="text-center" style="color:white">
+                Copyright © 2020 deporation
+            </h5>
+        </div>
+    </div>
+</div>
+</body>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+</html>
